@@ -59,8 +59,8 @@ function Logger(minimumLogLevel) {
 }
 
 Logger.prototype.cleanse = function(message) {
-  const apikey = new RegExp(`access_token=${window.Readarr.apiKey}`, 'g');
-  return message.replace(apikey, 'access_token=(removed)');
+  const apikey = new RegExp(`apikey=${window.Readarr.apiKey}`, 'g');
+  return message.replace(apikey, 'apikey=(removed)');
 };
 
 Logger.prototype.log = function(logLevel, message) {
@@ -103,7 +103,7 @@ class SignalRConnector extends Component {
 
     this.connection = new signalR.HubConnectionBuilder()
       .configureLogging(new Logger(signalR.LogLevel.Information))
-      .withUrl(`${url}?access_token=${window.Readarr.apiKey}`)
+      .withUrl(`${url}?apikey=${window.Readarr.apiKey}`)
       .withAutomaticReconnect({
         nextRetryDelayInMilliseconds: (retryContext) => {
           if (retryContext.elapsedMilliseconds > 180000) {
@@ -227,11 +227,11 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleQueueDetails = () => {
+  handleQueuedetails = () => {
     this.props.dispatchFetchQueueDetails();
   }
 
-  handleQueueStatus = (body) => {
+  handleQueuestatus = (body) => {
     this.props.dispatchUpdate({ section: 'queue.status', data: body.resource });
   }
 
@@ -241,7 +241,7 @@ class SignalRConnector extends Component {
     this.props.dispatchSetVersion({ version });
   }
 
-  handleWantedCutoff = (body) => {
+  handleWantedcutoff = (body) => {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'cutoffUnmet',
@@ -251,7 +251,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleWantedMissing = (body) => {
+  handleWantedmissing = (body) => {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'missing',
@@ -261,7 +261,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleSystemTask = () => {
+  handleTask = () => {
     this.props.dispatchFetchCommands();
   }
 
